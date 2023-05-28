@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
@@ -69,17 +68,17 @@ class _HomePageState extends State<HomePage> {
         counterLose++;
         icons2.add(Icon(Icons.thumb_down, size: 30, color: Colors.red));
       } else {
-        icons2.add(Icon(Icons.face, size: 30, color: Colors.yellow));
+        icons2.add(Icon(Icons.handshake, size: 30, color: Colors.yellow));
       }
       if (icons2.length >= 12) {
         AwesomeDialog(
           context: context,
           dialogType: DialogType.info,
           animType: AnimType.rightSlide,
-          title: 'Game Result',
-          desc: counterWin > counterLose
+          title: counterWin > counterLose
               ? "Winner \nResult $counterWin / $counterLose"
               : "Looser \nResult $counterWin / $counterLose",
+          desc: "Game Result!",
           btnOkOnPress: () {
             icons2.clear();
             counterLose = 0;
@@ -103,8 +102,9 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            Wrap(
               children: icons2,
             ),
             SizedBox(
