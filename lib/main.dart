@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List rand = ["paper.jpeg", "R.png", "scissors.png"];
+  late List rand = ["paper.png", "R.png", "scissors.png"];
   // ignore: non_constant_identifier_names
   late String rand_choise = rand[1];
   // ignore: non_constant_identifier_names
@@ -38,19 +38,18 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       rand_choise = rand[Random().nextInt(rand.length)];
       rand_choise2 = rand[Random().nextInt(rand.length)];
-      if (rand_choise == "paper.jpeg" && rand_choise2 == "R.png") {
+      if (rand_choise == "paper.png" && rand_choise2 == "R.png") {
         counterWin++;
         icons2.add(const Icon(
           Icons.thumb_up,
           size: 30,
           color: Colors.green,
         ));
-      } else if (rand_choise == "paper.jpeg" &&
-          rand_choise2 == "scissors.png") {
+      } else if (rand_choise == "paper.png" && rand_choise2 == "scissors.png") {
         counterLose++;
 
         icons2.add(const Icon(Icons.thumb_down, size: 30, color: Colors.red));
-      } else if (rand_choise == "R.png" && rand_choise2 == "paper.jpeg") {
+      } else if (rand_choise == "R.png" && rand_choise2 == "paper.png") {
         counterLose++;
         icons2.add(const Icon(Icons.thumb_down, size: 30, color: Colors.red));
       } else if (rand_choise == "R.png" && rand_choise2 == "scissors.png") {
@@ -60,8 +59,7 @@ class _HomePageState extends State<HomePage> {
           size: 30,
           color: Colors.green,
         ));
-      } else if (rand_choise == "scissors.png" &&
-          rand_choise2 == "paper.jpeg") {
+      } else if (rand_choise == "scissors.png" && rand_choise2 == "paper.png") {
         counterWin++;
         icons2.add(const Icon(Icons.thumb_up, size: 30, color: Colors.green));
       } else if (rand_choise == "scissors.png" && rand_choise2 == "R.png") {
@@ -73,12 +71,15 @@ class _HomePageState extends State<HomePage> {
       if (icons2.length >= 12) {
         AwesomeDialog(
           context: context,
-          dialogType: DialogType.info,
-          animType: AnimType.rightSlide,
-          title: counterWin > counterLose
+          dialogType:
+              counterWin > counterLose ? DialogType.success : DialogType.error,
+          animType: AnimType.scale,
+          title: "Game Result!",
+          desc: counterWin > counterLose
               ? "Winner \nResult $counterWin / $counterLose"
               : "Looser \nResult $counterWin / $counterLose",
-          desc: "Game Result!",
+          descTextStyle:
+              const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           btnOkOnPress: () {
             icons2.clear();
             counterLose = 0;
@@ -87,6 +88,7 @@ class _HomePageState extends State<HomePage> {
         ).show();
       }
     });
+    return null;
   }
 
   @override
@@ -113,11 +115,13 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Expanded(
-                    child: InkWell(
-                        onTap: random,
-                        child: Image.asset("images/$rand_choise"))),
+                  child: InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: random,
+                      child: Image.asset("images/$rand_choise")),
+                ),
                 const Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     "VS",
                     style: TextStyle(
