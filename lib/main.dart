@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       rand_choise2 = rand[Random().nextInt(rand.length)];
       if (rand_choise == "paper.jpeg" && rand_choise2 == "R.png") {
         counterWin++;
-        icons2.add(Icon(
+        icons2.add(const Icon(
           Icons.thumb_up,
           size: 30,
           color: Colors.green,
@@ -49,13 +49,13 @@ class _HomePageState extends State<HomePage> {
           rand_choise2 == "scissors.png") {
         counterLose++;
 
-        icons2.add(Icon(Icons.thumb_down, size: 30, color: Colors.red));
+        icons2.add(const Icon(Icons.thumb_down, size: 30, color: Colors.red));
       } else if (rand_choise == "R.png" && rand_choise2 == "paper.jpeg") {
         counterLose++;
-        icons2.add(Icon(Icons.thumb_down, size: 30, color: Colors.red));
+        icons2.add(const Icon(Icons.thumb_down, size: 30, color: Colors.red));
       } else if (rand_choise == "R.png" && rand_choise2 == "scissors.png") {
         counterWin++;
-        icons2.add(Icon(
+        icons2.add(const Icon(
           Icons.thumb_up,
           size: 30,
           color: Colors.green,
@@ -63,12 +63,12 @@ class _HomePageState extends State<HomePage> {
       } else if (rand_choise == "scissors.png" &&
           rand_choise2 == "paper.jpeg") {
         counterWin++;
-        icons2.add(Icon(Icons.thumb_up, size: 30, color: Colors.green));
+        icons2.add(const Icon(Icons.thumb_up, size: 30, color: Colors.green));
       } else if (rand_choise == "scissors.png" && rand_choise2 == "R.png") {
         counterLose++;
-        icons2.add(Icon(Icons.thumb_down, size: 30, color: Colors.red));
+        icons2.add(const Icon(Icons.thumb_down, size: 30, color: Colors.red));
       } else {
-        icons2.add(Icon(Icons.handshake, size: 30, color: Colors.yellow));
+        icons2.add(const Icon(Icons.handshake, size: 30, color: Colors.yellow));
       }
       if (icons2.length >= 12) {
         AwesomeDialog(
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
             counterLose = 0;
             counterWin = 0;
           },
-        )..show();
+        ).show();
       }
     });
   }
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
             Wrap(
               children: icons2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Row(
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                         onTap: random,
                         child: Image.asset("images/$rand_choise"))),
-                Padding(
+                const Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "VS",
