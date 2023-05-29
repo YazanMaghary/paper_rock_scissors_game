@@ -28,7 +28,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late List rand = ["paper.png", "R.png", "scissors.png"];
   // ignore: non_constant_identifier_names
-  late String rand_choise = rand[1];
+  late String rand_choise = rand[0];
   // ignore: non_constant_identifier_names
   late String rand_choise2 = rand[1];
   List<Icon> icons2 = [];
@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
   int counterLose = 0;
   Icon? random() {
     setState(() {
-      rand_choise = rand[Random().nextInt(rand.length)];
       rand_choise2 = rand[Random().nextInt(rand.length)];
       if (rand_choise == "paper.png" && rand_choise2 == "R.png") {
         counterWin++;
@@ -47,7 +46,6 @@ class _HomePageState extends State<HomePage> {
         ));
       } else if (rand_choise == "paper.png" && rand_choise2 == "scissors.png") {
         counterLose++;
-
         icons2.add(const Icon(Icons.thumb_down, size: 30, color: Colors.red));
       } else if (rand_choise == "R.png" && rand_choise2 == "paper.png") {
         counterLose++;
@@ -70,6 +68,7 @@ class _HomePageState extends State<HomePage> {
       }
       if (icons2.length >= 12) {
         AwesomeDialog(
+          dismissOnTouchOutside: false,
           context: context,
           dialogType:
               counterWin > counterLose ? DialogType.success : DialogType.error,
@@ -115,10 +114,21 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Expanded(
-                  child: InkWell(
-                      splashFactory: NoSplash.splashFactory,
-                      onTap: random,
-                      child: Image.asset("images/$rand_choise")),
+                  child: Column(
+                    children: [
+                      Image.asset("images/$rand_choise"),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text(
+                        "You",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      )
+                    ],
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -130,8 +140,87 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white),
                   ),
                 ),
-                Expanded(child: Image.asset("images/$rand_choise2"))
+                Expanded(
+                    child: Column(
+                  children: [
+                    Image.asset("images/$rand_choise2"),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Text(
+                      "System",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )
+                  ],
+                ))
               ],
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        random();
+                        rand_choise = rand[0];
+                      },
+                      child: Image.asset("images/paper.png"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        random();
+                        rand_choise = rand[1];
+                      },
+                      child: Image.asset("images/R.png"),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        random();
+                        rand_choise = rand[2];
+                      },
+                      child: Image.asset("images/scissors.png"),
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),
