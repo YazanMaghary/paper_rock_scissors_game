@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -34,6 +35,8 @@ class _HomePageState extends State<HomePage> {
   List<Icon> icons2 = [];
   int counterWin = 0;
   int counterLose = 0;
+  bool isPlay = false;
+  double turns = 0;
   Icon? random() {
     setState(() {
       rand_choise2 = rand[Random().nextInt(rand.length)];
@@ -105,8 +108,45 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Wrap(
-              children: icons2,
+            Column(
+              children: [
+                SizedBox(
+                  // gibe it rotation only
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        "images/paper.png",
+                        width: 40,
+                        height: 40,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "images/R.png",
+                            width: 40,
+                            height: 40,
+                          ),
+                          Image.asset(
+                            "images/scissors.png",
+                            width: 40,
+                            height: 40,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Wrap(
+                children: icons2,
+              ),
             ),
             const SizedBox(
               height: 12,
@@ -116,7 +156,13 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: Column(
                     children: [
-                      Image.asset("images/$rand_choise"),
+                      AnimatedScale(
+                          scale: isPlay ? 0.0 : 1,
+                          duration: const Duration(milliseconds: 250),
+                          child: AnimatedRotation(
+                              duration: const Duration(milliseconds: 250),
+                              turns: turns,
+                              child: Image.asset("images/$rand_choise"))),
                       const SizedBox(
                         height: 8,
                       ),
@@ -143,7 +189,13 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                     child: Column(
                   children: [
-                    Image.asset("images/$rand_choise2"),
+                    AnimatedScale(
+                        duration: const Duration(milliseconds: 250),
+                        scale: isPlay ? 0 : 1,
+                        child: AnimatedRotation(
+                            duration: const Duration(milliseconds: 250),
+                            turns: turns,
+                            child: Image.asset("images/$rand_choise2"))),
                     const SizedBox(
                       height: 8,
                     ),
@@ -173,8 +225,18 @@ class _HomePageState extends State<HomePage> {
                       splashFactory: NoSplash.splashFactory,
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        random();
-                        rand_choise = rand[0];
+                        setState(() {
+                          isPlay = true;
+                          turns += 1;
+                        });
+                        Timer(const Duration(milliseconds: 250), () {
+                          setState(() {
+                            random();
+                            rand_choise = rand[0];
+                            isPlay = false;
+                            turns = 0;
+                          });
+                        });
                       },
                       child: Image.asset("images/paper.png"),
                     ),
@@ -197,8 +259,18 @@ class _HomePageState extends State<HomePage> {
                       splashFactory: NoSplash.splashFactory,
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        random();
-                        rand_choise = rand[1];
+                        setState(() {
+                          isPlay = true;
+                          turns += 1;
+                        });
+                        Timer(const Duration(milliseconds: 250), () {
+                          setState(() {
+                            random();
+                            rand_choise = rand[1];
+                            isPlay = false;
+                            turns = 0;
+                          });
+                        });
                       },
                       child: Image.asset("images/R.png"),
                     ),
@@ -213,8 +285,18 @@ class _HomePageState extends State<HomePage> {
                       splashFactory: NoSplash.splashFactory,
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        random();
-                        rand_choise = rand[2];
+                        setState(() {
+                          isPlay = true;
+                          turns += 1;
+                        });
+                        Timer(const Duration(milliseconds: 250), () {
+                          setState(() {
+                            random();
+                            rand_choise = rand[2];
+                            isPlay = false;
+                            turns = 0;
+                          });
+                        });
                       },
                       child: Image.asset("images/scissors.png"),
                     ),
